@@ -14,6 +14,7 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
+    TextStyle? style = Theme.of(context).textTheme.headline6;
     return Scaffold(
       appBar: AppBar(
         title: Text("Waste-A-Gram"),
@@ -31,8 +32,8 @@ class _ListScreenState extends State<ListScreen> {
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(formatDate(post["date"])),
-                      Text(post["quantity"].toString()),
+                      Text(formatDate(post["date"]), style: style),
+                      Text(post["quantity"].toString(), style: style),
                     ],
                   ),
                 );

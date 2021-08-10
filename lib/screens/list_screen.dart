@@ -1,8 +1,12 @@
-import "package:flutter/material.dart";
+import "dart:io";
 import "package:cloud_firestore/cloud_firestore.dart";
+import "package:flutter/material.dart";
+import "package:firebase_storage/firebase_storage.dart";
+import "package:image_picker/image_picker.dart";
 
 // internally-maintained imports
-import '../helpers/formatted_date.dart';
+import "../helpers/formatted_date.dart";
+import "../screens/new_post_screen.dart";
 
 class ListScreen extends StatefulWidget {
   const ListScreen({Key? key}) : super(key: key);
@@ -12,6 +16,20 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
+  File? image;
+  final imagePicker = ImagePicker();
+
+  Future getImage() async {
+    final file = await imagePicker.pickImage(source: ImageSource.gallery);
+    image = File(file!.path);
+    var filename = DateTime.now().toString() + ".jpg";
+    Reference storageRef = FirebaseStorage.instance.ref().child(filename);
+    UploadTask uploadTask = storageRef.putFile(image!);
+    await uploadTask;
+    final url = await storageRef.getDownloadURL();
+    return url;
+  }
+
   @override
   Widget build(BuildContext context) {
     TextStyle? style = Theme.of(context).textTheme.headline6;
@@ -44,6 +62,18 @@ class _ListScreenState extends State<ListScreen> {
           }
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => NewPostScreen(),
+            ),
+          );
+        },
+        child: Icon(Icons.camera_alt),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

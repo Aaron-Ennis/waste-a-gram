@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 
 // internally-maintained imports
-import "../models/formatted_date.dart";
+import '../helpers/formatted_date.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({Key? key}) : super(key: key);

@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 // internally-maintained imports
 import "../helpers/formatted_date.dart";
 import "../helpers/get_image.dart";
+import "../screens/detail_screen.dart";
 import "../screens/new_post_screen.dart";
 
 class ListScreen extends StatefulWidget {
@@ -53,6 +54,15 @@ class _ListScreenState extends State<ListScreen> {
                       Text(post["quantity"].toString(), style: style),
                     ],
                   ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            DetailScreen(post: post),
+                      ),
+                    );
+                  },
                 );
               },
             ),

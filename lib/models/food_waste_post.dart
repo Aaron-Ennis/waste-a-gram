@@ -4,8 +4,8 @@ class FoodWastePost {
   final Timestamp date;
   final String imageUrl;
   final int quantity;
-  final String latitude;
-  final String longitude;
+  final double latitude;
+  final double longitude;
 
   FoodWastePost(
       {required this.date,
@@ -18,9 +18,9 @@ class FoodWastePost {
     return FoodWastePost(
       date: json["date"],
       imageUrl: json["imageUrl"],
-      quantity: int.parse(json["quantity"]),
-      latitude: json["latitude"],
-      longitude: json["longitude"],
+      quantity: json["quantity"] as int,
+      latitude: json["latitude"] as double,
+      longitude: json["longitude"] as double,
     );
   }
 }

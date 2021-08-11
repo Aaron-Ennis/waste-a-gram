@@ -6,7 +6,7 @@ import "package:image_picker/image_picker.dart";
 
 // internally-maintained imports
 import "../helpers/formatted_date.dart";
-import "../screens/new_post_screen.dart";
+import "../widgets/upload_button.dart";
 
 class ListScreen extends StatefulWidget {
   const ListScreen({Key? key}) : super(key: key);
@@ -62,17 +62,7 @@ class _ListScreenState extends State<ListScreen> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) => NewPostScreen(),
-            ),
-          );
-        },
-        child: Icon(Icons.camera_alt),
-      ),
+      floatingActionButton: UploadButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

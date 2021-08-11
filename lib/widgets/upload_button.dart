@@ -1,4 +1,3 @@
-import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 
 // internally-maintained imports
@@ -11,9 +10,6 @@ class UploadButton extends StatefulWidget {
 }
 
 class _UploadButtonState extends State<UploadButton> {
-  // File? image;
-  // final imagePicker = ImagePicker();
-
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
@@ -33,16 +29,4 @@ class _UploadButtonState extends State<UploadButton> {
       ),
     );
   }
-
-  // Boilerplate function to upload an image to cloud storage and get its url
-  // Future getImage() async {
-  //   final file = await imagePicker.pickImage(source: ImageSource.gallery);
-  //   image = File(file!.path);
-  //   var filename = DateTime.now().toString() + ".jpg";
-  //   Reference storageRef = FirebaseStorage.instance.ref().child(filename);
-  //   UploadTask uploadTask = storageRef.putFile(image!);
-  //   await uploadTask;
-  //   final url = await storageRef.getDownloadURL();
-  //   return url;
-  // }
 }

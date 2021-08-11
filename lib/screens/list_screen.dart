@@ -6,6 +6,7 @@ import "package:image_picker/image_picker.dart";
 
 // internally-maintained imports
 import "../helpers/formatted_date.dart";
+import "../widgets/dynamic_title.dart";
 import "../widgets/upload_button.dart";
 
 class ListScreen extends StatefulWidget {
@@ -18,24 +19,14 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   File? image;
   final imagePicker = ImagePicker();
-
-  Future getImage() async {
-    final file = await imagePicker.pickImage(source: ImageSource.gallery);
-    image = File(file!.path);
-    var filename = DateTime.now().toString() + ".jpg";
-    Reference storageRef = FirebaseStorage.instance.ref().child(filename);
-    UploadTask uploadTask = storageRef.putFile(image!);
-    await uploadTask;
-    final url = await storageRef.getDownloadURL();
-    return url;
-  }
+  int totalWaste = 0;
 
   @override
   Widget build(BuildContext context) {
     TextStyle? style = Theme.of(context).textTheme.headline6;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Waste-A-Gram"),
+        title: DynamicTitle(),
         centerTitle: true,
       ),
       body: StreamBuilder(

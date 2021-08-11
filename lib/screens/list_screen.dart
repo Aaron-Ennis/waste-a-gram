@@ -73,8 +73,8 @@ class _ListScreenState extends State<ListScreen> {
   }
 
   // There is probably a cleaner way to trigger the Circular Progress
-  // Indicator than using a setState bool when waiting for the async return.
-  // This works for now, but need to research...
+  // Indicator than using a boolean state variable when waiting for the async
+  // to return. This works for now, but need to research...
   void onPressed() async {
     setState(() {
       loading = true;

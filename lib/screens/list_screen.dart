@@ -37,7 +37,7 @@ class _ListScreenState extends State<ListScreen> {
         stream: FirebaseFirestore.instance.collection("posts").snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData && snapshot.data!.docs.length > 0) {
-            // Calculate the total waste to display in the AppBar
+            // EXTRA CREDIT: Calculate the total waste to display in the AppBar
             int totalWaste = 0;
             snapshot.data!.docs.forEach((doc) {
               totalWaste += doc["quantity"] as int;

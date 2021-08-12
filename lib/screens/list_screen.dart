@@ -28,58 +28,76 @@ class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
     TextStyle? style = Theme.of(context).textTheme.headline6;
-    return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection("posts").snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasData && snapshot.data!.docs.length > 0 && !loading) {
-          // Calculate the total waste to display in the AppBar
-          int totalWaste = 0;
-          snapshot.data!.docs.forEach((doc) {
-            totalWaste += doc["quantity"] as int;
-          });
-          return Scaffold(
-            appBar: AppBar(
-              title: Text("Waste-A-Gram-" + totalWaste.toString()),
-              centerTitle: true,
-            ),
-            body: ListView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (context, index) {
-                var post = snapshot.data!.docs[index];
-                return ListTile(
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(formatDate(post["date"]), style: style),
-                      Text(post["quantity"].toString(), style: style),
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            DetailScreen(post: post),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: onPressed,
-              child: Icon(Icons.camera_alt),
-            ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-          );
-        } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      },
-    );
+    if (loading) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    } else {
+      return StreamBuilder(
+        stream: FirebaseFirestore.instance.collection("posts").snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasData && snapshot.data!.docs.length > 0) {
+            // Calculate the total waste to display in the AppBar
+            int totalWaste = 0;
+            snapshot.data!.docs.forEach((doc) {
+              totalWaste += doc["quantity"] as int;
+            });
+            return Scaffold(
+              appBar: AppBar(
+                title: Text("Waste-A-Gram-" + totalWaste.toString()),
+                centerTitle: true,
+              ),
+              body: ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  var post = snapshot.data!.docs[index];
+                  return ListTile(
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(formatDate(post["date"]), style: style),
+                        Text(post["quantity"].toString(), style: style),
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              DetailScreen(post: post),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: onPressed,
+                child: Icon(Icons.camera_alt),
+              ),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerFloat,
+            );
+          } else {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text("Waste-A-Gram-0"),
+                centerTitle: true,
+              ),
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: onPressed,
+                child: Icon(Icons.camera_alt),
+              ),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerFloat,
+            );
+          }
+        },
+      );
+    }
   }
 
   // There is probably a cleaner way to trigger the Circular Progress

@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import "package:cloud_firestore/cloud_firestore.dart";
 
 class FoodWastePost {
   final Timestamp date;
@@ -14,13 +14,13 @@ class FoodWastePost {
       required this.latitude,
       required this.longitude});
 
-  factory FoodWastePost.fromJSON(Map<String, dynamic> json) {
+  factory FoodWastePost.fromMap(Map<String, dynamic> data) {
     return FoodWastePost(
-      date: json["date"],
-      imageUrl: json["imageUrl"],
-      quantity: json["quantity"] as int,
-      latitude: json["latitude"] as double,
-      longitude: json["longitude"] as double,
+      date: data["date"],
+      imageUrl: data["imageUrl"],
+      quantity: data["quantity"] as int,
+      latitude: data["latitude"] as double,
+      longitude: data["longitude"] as double,
     );
   }
 }

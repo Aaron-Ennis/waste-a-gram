@@ -51,30 +51,32 @@ class _ListScreenState extends State<ListScreen> {
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   var post = snapshot.data!.docs[index];
-                  return ListTile(
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(formatDate(post["date"]), style: style),
-                        Text(post["quantity"].toString(), style: style),
-                      ],
+                  return Semantics(
+                    button: true,
+                    enabled: true,
+                    onTapHint: "View post details",
+                    child: ListTile(
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(formatDate(post["date"]), style: style),
+                          Text(post["quantity"].toString(), style: style),
+                        ],
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                DetailScreen(post: post),
+                          ),
+                        );
+                      },
                     ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              DetailScreen(post: post),
-                        ),
-                      );
-                    },
                   );
                 },
               ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: onPressed,
-                child: Icon(Icons.camera_alt),
-              ),
+              floatingActionButton: cameraFab(),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat,
             );
@@ -87,10 +89,7 @@ class _ListScreenState extends State<ListScreen> {
               body: Center(
                 child: CircularProgressIndicator(),
               ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: onPressed,
-                child: Icon(Icons.camera_alt),
-              ),
+              floatingActionButton: cameraFab(),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat,
             );
@@ -123,6 +122,18 @@ class _ListScreenState extends State<ListScreen> {
       MaterialPageRoute(
         builder: (BuildContext context) => NewPostScreen(imageUrl: url),
       ),
+    );
+  }
+
+  Widget cameraFab() {
+    return Semantics(
+      child: FloatingActionButton(
+        onPressed: onPressed,
+        child: Icon(Icons.camera_alt),
+      ),
+      button: true,
+      enabled: true,
+      onTapHint: "Select an image and open post screen",
     );
   }
 }

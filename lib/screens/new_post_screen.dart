@@ -70,7 +70,12 @@ class _NewPostScreenState extends State<NewPostScreen> {
           children: [
             Expanded(child: ImageContainer(imageUrl: widget.imageUrl)),
             Expanded(child: quantityFormField()),
-            postButton(),
+            Semantics(
+              child: postButton(),
+              button: true,
+              enabled: true,
+              onTapHint: "Upload a post",
+            ),
           ],
         ),
       ),
@@ -82,9 +87,11 @@ class _NewPostScreenState extends State<NewPostScreen> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        keyboardType: TextInputType.number,
+        textAlign: TextAlign.center,
         decoration: InputDecoration(
-          labelText: "Number of wasted items",
-          floatingLabelBehavior: FloatingLabelBehavior.never,
+          hintText: "Number of wasted items",
+          //floatingLabelBehavior: FloatingLabelBehavior.never,
         ),
         onSaved: (value) {
           quantity = int.parse(value!);
@@ -96,8 +103,6 @@ class _NewPostScreenState extends State<NewPostScreen> {
             return null;
           }
         },
-        keyboardType: TextInputType.number,
-        textAlign: TextAlign.center,
       ),
     );
   }

@@ -13,7 +13,7 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FoodWastePost foodWastePost =
-        FoodWastePost.fromJSON(post.data()! as Map<String, dynamic>);
+        FoodWastePost.fromMap(post.data()! as Map<String, dynamic>);
     return Scaffold(
       appBar: AppBar(
         title: Text("Waste-A-Gram"),

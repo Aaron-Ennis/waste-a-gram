@@ -30,13 +30,3 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
-
-  # assets:
-  #   - assetsFolder/path
-  # fonts:
-  #   - family:
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #         weight: 
